@@ -174,6 +174,7 @@ async function boot() {
       state.juice.stepPuff(fx, fy, tile);
     }
   };
+  const dayNight = (h) => state.audio.setAmbience(h >= 6 && h < 18 ? 'day' : 'night');
   on('time:hour', (t) => dayNight(t.hour24));
   on('time:hour', () => applySchedules());
   dayNight(state.time.hour24);
