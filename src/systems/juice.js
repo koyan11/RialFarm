@@ -53,23 +53,6 @@ export class Juice {
     }
   }
 
-  /** Small subtle dust / step puff at foot position when walking. */
-  stepPuff(x, y, tile = 'dirt') {
-    for (let i = 0; i < 2; i++) {
-      this.particles.push({
-        x: x + (Math.random() * 4 - 2),
-        y: y - 1,
-        vx: (Math.random() * 14 - 7),
-        vy: -(5 + Math.random() * 6),
-        life: 0.2,
-        maxLife: 0.2,
-        gravity: 50,
-        tile,
-        chip: [(Math.random() * 28) | 0, (Math.random() * 28) | 0],
-      });
-    }
-  }
-
   /** Rising label, e.g. "+4 Kayu". */
   text(x, y, str, color = '#f5e6c8') {
     this.texts.push({ x, y, str, color, life: 1.1, maxLife: 1.1 });

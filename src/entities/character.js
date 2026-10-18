@@ -18,7 +18,6 @@ export class Character {
     this.box = { w: 18, h: 10 }; // feet collision box, centered on x, bottom at y
     this.onStep = null;         // fired once per stride, for the footstep sound
     this._stepDist = 0;
-    this._stepSide = 0;
   }
 
   /** Move by a unit vector, resolving collisions per axis against the map. */
@@ -37,16 +36,9 @@ export class Character {
     // NPC ambling at half speed should not shuffle at a walker's frame rate.
     this.animT += dt * (this.speed / this.baseSpeed);
 
-    // one footstep every ~20 px walked, independent of frame rate
+    // one footstep every ~24 px walked, independent of frame rate
     this._stepDist += this.speed * dt;
-    if (this._stepDist >= 20) {
-      this._stepDist = 0;
-      this._stepSide = 1 - (this._stepSide || 0);
-      const footOffsetX = (this.dir === 'down' || this.dir === 'up')
-        ? (this._stepSide === 0 ? -4 : 4)
-        : (this.dir === 'left' ? 3 : -3);
-      this.onStep?.(this.x + footOffsetX, this.y, this.dir, this._stepSide);
-    }
+    if (this._stepDist >= 24) { this._stepDist = 0; this.onStep?.(); }
   }
 
   frame() {
@@ -63,12 +55,7 @@ export class Character {
     ctx.fill();
     const prevFilter = ctx.filter;
     if (this.filter) ctx.filter = this.filter;
-
-    // Natural walk bobbing: frame 2 (passing leg) has subtle 1-px lift
-    const curFrame = this.frame();
-    const bobY = this.moving && curFrame === 2 ? -1 : 0;
-
-    drawFrame(ctx, img, def.frame[0], def.frame[1], curFrame, DIR_ROW[this.dir], this.x - camX, this.y - camY + bobY);
+    drawFrame(ctx, img, def.frame[0], def.frame[1], this.frame(), DIR_ROW[this.dir], this.x - camX, this.y - camY);
     if (this.filter) ctx.filter = prevFilter;
   }
 

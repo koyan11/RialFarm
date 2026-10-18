@@ -165,15 +165,7 @@ async function boot() {
   // start, because browsers block audio until the player interacts.
   const unlock = () => state.audio.unlock();
   for (const ev of ['pointerdown', 'keydown']) window.addEventListener(ev, unlock);
-  state.player.onStep = (fx, fy) => {
-    state.audio.step();
-    const map = state.map;
-    if (map && state.juice) {
-      const c = Math.floor(fx / 32), r = Math.floor((fy - 1) / 32);
-      const tile = map.terrainAt(c, r) || 'dirt';
-      state.juice.stepPuff(fx, fy, tile);
-    }
-  };
+  state.player.onStep = () => state.audio.step();
   const dayNight = (h) => state.audio.setAmbience(h >= 6 && h < 18 ? 'day' : 'night');
   on('time:hour', (t) => dayNight(t.hour24));
   on('time:hour', () => applySchedules());
