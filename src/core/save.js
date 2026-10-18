@@ -9,6 +9,7 @@ export const SAVE_VERSION = 3;
  */
 export const AVATARS = [
   { id: 'player_f3', label: 'Pink Panther Boss (Karakter Utama)', portrait: 'player_f3' },
+  { id: 'player_f4', label: 'Snow Leopard (Macan Tutul Salju)', portrait: 'player_f4' },
   { id: 'player_m', label: 'Arya (Petani Biru)', portrait: 'player_m' },
   { id: 'player_f', label: 'Laras (Petani Abu)', portrait: 'player_f' },
   { id: 'player_m2', label: 'Damar (Kemeja Hijau)', portrait: 'player_m2' },
